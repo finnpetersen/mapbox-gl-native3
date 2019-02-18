@@ -1,5 +1,54 @@
 apply plugin: 'com.android.library'
+ext {
 
+    androidVersions = [
+            minSdkVersion    : 14,
+            targetSdkVersion : 25,
+            compileSdkVersion: 25,
+            buildToolsVersion: '26.0.3'
+    ]
+
+    versions = [
+            mapboxServices: '2.2.9',
+            supportLib    : '25.4.0',
+            espresso      : '3.0.1',
+            testRunner    : '1.0.1',
+            leakCanary    : '1.5.1',
+            lost          : '3.0.4',
+            junit         : '4.12',
+            mockito       : '2.10.0',
+            robolectric   : '3.5.1',
+            timber        : '4.5.1',
+            okhttp        : '3.9.1'
+    ]
+
+    dependenciesList = [
+            mapboxJavaServices    : "com.mapbox.mapboxsdk:mapbox-java-services:${versions.mapboxServices}@jar",
+            mapboxJavaGeoJSON     : "com.mapbox.mapboxsdk:mapbox-java-geojson:${versions.mapboxServices}@jar",
+            mapboxAndroidTelemetry: "com.mapbox.mapboxsdk:mapbox-android-telemetry:${versions.mapboxServices}@aar",
+
+            junit                 : "junit:junit:${versions.junit}",
+            mockito               : "org.mockito:mockito-core:${versions.mockito}",
+            robolectric           : "org.robolectric:robolectric:${versions.robolectric}",
+
+            testRunner            : "com.android.support.test:runner:${versions.testRunner}",
+            testRules             : "com.android.support.test:rules:${versions.testRunner}",
+            testEspressoCore      : "com.android.support.test.espresso:espresso-core:${versions.espresso}",
+            testEspressoIntents   : "com.android.support.test.espresso:espresso-intents:${versions.espresso}",
+
+            supportAnnotations    : "com.android.support:support-annotations:${versions.supportLib}",
+            supportAppcompatV7    : "com.android.support:appcompat-v7:${versions.supportLib}",
+            supportFragmentV4     : "com.android.support:support-fragment:${versions.supportLib}",
+            supportDesign         : "com.android.support:design:${versions.supportLib}",
+            supportRecyclerView   : "com.android.support:recyclerview-v7:${versions.supportLib}",
+
+            lost                  : "com.mapzen.android:lost:${versions.lost}",
+            timber                : "com.jakewharton.timber:timber:${versions.timber}",
+            okhttp3               : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+            leakCanaryDebug       : "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}",
+            leakCanaryRelease     : "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakCanary}"
+    ]
+}
 dependencies {
     api dependenciesList.mapboxAndroidTelemetry
     api dependenciesList.mapboxJavaGeoJSON
@@ -42,10 +91,10 @@ android {
     // When building from Android Studio, gradle.properties sets `android.buildOnlyTargetAbi=true` so that
     // only the architecture for the device you're running on gets built.
     def abi = 'all'
-    if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
+/*     if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
         // Errors when the user invokes Gradle from the command line and didn't set mapbox.abis
         abi = project.getProperty("mapbox.abis")
-    }
+    } */
 
     if (abi != 'none') {
         externalNativeBuild {
@@ -64,17 +113,17 @@ android {
                     arguments "-DANDROID_CPP_FEATURES=rtti;exceptions"
                     arguments "-DMBGL_PLATFORM=android"
                     arguments "-DMASON_PLATFORM=android"
-                    arguments "-DNodeJS_EXECUTABLE=" + node
-                    arguments "-Dnpm_EXECUTABLE=" + npm
+                    /* arguments "-DNodeJS_EXECUTABLE=" + node
+                    arguments "-Dnpm_EXECUTABLE=" + npm */
 
                     // Enable ccache if the user has installed it.
-                    if (ccache?.trim()) {
+                    /* if (ccache?.trim()) {
                         arguments "-DANDROID_CCACHE=" + ccache
                         // ccache splits up the compile command until multiple invocations and uses -E
                         // with one of them, and clang doesn't like unused arguments in that case.
                         cFlags "-Qunused-arguments"
                         cppFlags "-Qunused-arguments"
-                    }
+                    } */
 
                     targets "mapbox-gl"
 
@@ -89,7 +138,7 @@ android {
                     if (abi != 'all') {
                         abiFilters abi.split(' ')
                     } else {
-                        abiFilters "armeabi", "armeabi-v7a", "mips", "x86", "arm64-v8a", "x86_64"
+                        abiFilters /* "armeabi", */ "armeabi-v7a", /* "mips", */ "x86", "arm64-v8a", "x86_64"
                     }
                 }
             }
@@ -144,8 +193,8 @@ configurations {
     all*.exclude group: 'commons-collections', module: 'commons-collections'
 }
 
-apply from: "${rootDir}/gradle/gradle-javadoc.gradle"
+/* apply from: "${rootDir}/gradle/gradle-javadoc.gradle"
 apply from: "${rootDir}/gradle/gradle-publish.gradle"
 apply from: "${rootDir}/gradle/gradle-checkstyle.gradle"
 apply from: "${rootDir}/gradle/gradle-tests-staticblockremover.gradle"
-apply from: "${rootDir}/gradle/gradle-lint.gradle"
+apply from: "${rootDir}/gradle/gradle-lint.gradle" */

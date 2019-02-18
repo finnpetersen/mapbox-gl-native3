@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+import android.util.Log;
+
 /**
  * GeoJson source, allows using FeatureCollections from Json.
  *
@@ -37,6 +40,7 @@ public class GeoJsonSource extends Source {
    * @param id the source id
    */
   public GeoJsonSource(String id) {
+    Log.e("heres","1");
     initialize(id, null);
     setGeoJson(FeatureCollection.fromFeatures(new ArrayList<Feature>()));
   }
@@ -48,6 +52,7 @@ public class GeoJsonSource extends Source {
    * @param options options
    */
   public GeoJsonSource(String id, GeoJsonOptions options) {
+    Log.e("heres","2");
     initialize(id, options);
     setGeoJson(FeatureCollection.fromFeatures(new ArrayList<Feature>()));
   }
@@ -59,6 +64,7 @@ public class GeoJsonSource extends Source {
    * @param geoJson raw Json FeatureCollection
    */
   public GeoJsonSource(String id, String geoJson) {
+    Log.e("heres","3");
     if (geoJson == null || geoJson.startsWith("http")) {
       throw new IllegalArgumentException("Expected a raw json body");
     }
@@ -74,6 +80,7 @@ public class GeoJsonSource extends Source {
    * @param options options
    */
   public GeoJsonSource(String id, String geoJson, GeoJsonOptions options) {
+    Log.e("heres","4");
     if (geoJson == null || geoJson.startsWith("http")) {
       throw new IllegalArgumentException("Expected a raw json body");
     }
@@ -88,6 +95,7 @@ public class GeoJsonSource extends Source {
    * @param url remote json file
    */
   public GeoJsonSource(String id, URL url) {
+    Log.e("heres","5");
     initialize(id, null);
     nativeSetUrl(url.toExternalForm());
   }
@@ -100,6 +108,7 @@ public class GeoJsonSource extends Source {
    * @param options options
    */
   public GeoJsonSource(String id, URL url, GeoJsonOptions options) {
+    Log.e("heres","6");
     initialize(id, options);
     nativeSetUrl(url.toExternalForm());
   }
@@ -111,6 +120,7 @@ public class GeoJsonSource extends Source {
    * @param features the features
    */
   public GeoJsonSource(String id, FeatureCollection features) {
+    Log.e("heres","7");
     initialize(id, null);
     setGeoJson(features);
   }
@@ -123,6 +133,7 @@ public class GeoJsonSource extends Source {
    * @param options  options
    */
   public GeoJsonSource(String id, FeatureCollection features, GeoJsonOptions options) {
+    Log.e("heres","8");
     initialize(id, options);
     setGeoJson(features);
   }
@@ -134,6 +145,7 @@ public class GeoJsonSource extends Source {
    * @param feature the feature
    */
   public GeoJsonSource(String id, Feature feature) {
+    Log.e("heres","10");
     initialize(id, null);
     setGeoJson(feature);
   }
@@ -146,6 +158,7 @@ public class GeoJsonSource extends Source {
    * @param options options
    */
   public GeoJsonSource(String id, Feature feature, GeoJsonOptions options) {
+    Log.e("heres","11");
     initialize(id, options);
     setGeoJson(feature);
   }
@@ -157,6 +170,7 @@ public class GeoJsonSource extends Source {
    * @param geometry the geometry
    */
   public GeoJsonSource(String id, Geometry geometry) {
+    Log.e("heres","12");
     initialize(id, null);
     setGeoJson(geometry);
   }
@@ -169,6 +183,7 @@ public class GeoJsonSource extends Source {
    * @param options  options
    */
   public GeoJsonSource(String id, Geometry geometry, GeoJsonOptions options) {
+    Log.e("heres","13");
     initialize(id, options);
     setGeoJson(geometry);
   }
