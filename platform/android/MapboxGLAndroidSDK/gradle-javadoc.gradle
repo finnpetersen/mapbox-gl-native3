@@ -6,7 +6,7 @@ android.libraryVariants.all { variant ->
         failOnError = false
         destinationDir = new File(destinationDir, variant.baseName)
         source = files(variant.javaCompile.source)
-        classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath)
+        doFirst { classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath) }
         options.windowTitle("Mapbox Android SDK $VERSION_NAME Reference")
         options.docTitle("Mapbox Android SDK $VERSION_NAME")
         options.header("Mapbox Android SDK $VERSION_NAME Reference")
