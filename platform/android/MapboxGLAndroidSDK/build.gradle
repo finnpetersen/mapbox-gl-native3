@@ -1,29 +1,29 @@
 apply plugin: 'com.android.library'
 
 dependencies {
-    api rootProject.ext.dep.mapboxAndroidTelemetry
-    api rootProject.ext.dep.mapboxJavaGeoJSON
-    implementation rootProject.ext.dep.supportAnnotations
-    implementation rootProject.ext.dep.supportFragmentV4
-    implementation rootProject.ext.dep.timber
-    implementation rootProject.ext.dep.okhttp3
-    compileOnly(rootProject.ext.dep.lost) {
+    api "com.mapbox.mapboxsdk:mapbox-android-telemetry:2.2.9@aar"
+    api "com.mapbox.mapboxsdk:mapbox-java-geojson:2.2.9@jar"
+    implementation "com.android.support:support-annotations:25.4.0"
+    implementation "com.android.support:support-fragment:25.4.0"
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    compileOnly('com.mapzen.android:lost:3.0.4') {
         exclude group: 'com.google.guava'
         exclude group: 'com.android.support'
     }
-    testImplementation rootProject.ext.dep.lost
-    testImplementation rootProject.ext.dep.junit
-    testImplementation rootProject.ext.dep.mockito
-    testImplementation rootProject.ext.dep.robolectric
+    testImplementation 'com.mapzen.android:lost:3.0.4'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
+    testImplementation 'org.robolectric:robolectric:3.5.1'
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 25
+    buildToolsVersion "26.0.3"
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 14
+        targetSdkVersion 25
         buildConfigField "String", "GIT_REVISION_SHORT", String.format("\"%s\"", getGitRevision())
         buildConfigField "String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", project.VERSION_NAME)
         buildConfigField "String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"MapboxEventsAndroid/%s\"", project.VERSION_NAME)
@@ -42,10 +42,10 @@ android {
     // When building from Android Studio, gradle.properties sets `android.buildOnlyTargetAbi=true` so that
     // only the architecture for the device you're running on gets built.
     def abi = 'all'
-    if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
+   /*  if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
         // Errors when the user invokes Gradle from the command line and didn't set mapbox.abis
         abi = project.getProperty("mapbox.abis")
-    }
+    } */
 
     if (abi != 'none') {
         externalNativeBuild {
@@ -64,17 +64,17 @@ android {
                     arguments "-DANDROID_CPP_FEATURES=rtti;exceptions"
                     arguments "-DMBGL_PLATFORM=android"
                     arguments "-DMASON_PLATFORM=android"
-                    arguments "-DNodeJS_EXECUTABLE=" + rootProject.ext.node
-                    arguments "-Dnpm_EXECUTABLE=" + rootProject.ext.npm
+                    /* arguments "-DNodeJS_EXECUTABLE=" + rootProject.ext.node
+                    arguments "-Dnpm_EXECUTABLE=" + rootProject.ext.npm */
 
                     // Enable ccache if the user has installed it.
-                    if (rootProject.ext.ccache?.trim()) {
+                    /* if (rootProject.ext.ccache?.trim()) {
                         arguments "-DANDROID_CCACHE=" + rootProject.ext.ccache
                         // ccache splits up the compile command until multiple invocations and uses -E
                         // with one of them, and clang doesn't like unused arguments in that case.
                         cFlags "-Qunused-arguments"
                         cppFlags "-Qunused-arguments"
-                    }
+                    } */
 
                     targets "mapbox-gl"
 
@@ -89,7 +89,7 @@ android {
                     if (abi != 'all') {
                         abiFilters abi.split(' ')
                     } else {
-                        abiFilters "armeabi", "armeabi-v7a", "mips", "x86", "arm64-v8a", "x86_64"
+                        abiFilters /* "armeabi", */ "armeabi-v7a", /* mips */ "x86", "arm64-v8a", "x86_64"
                     }
                 }
             }

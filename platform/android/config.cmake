@@ -1,4 +1,5 @@
 add_definitions(-DMBGL_USE_GLES2=1)
+add_definitions ( -DPQXX_HIDE_EXP_OPTIONAL )
 include(cmake/test-files.cmake)
 
 # Build thin archives.
